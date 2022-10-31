@@ -1,0 +1,23 @@
+CREATE TABLE data(
+                     transaction_id SERIAL PRIMARY KEY,
+                     request_id INTEGER,
+                     terminal_id INTEGER,
+                     partner_object_id INTEGER,
+                     amount_total NUMERIC,
+                     amount_original NUMERIC,
+                     commission_ps NUMERIC(25, 2),
+                     commission_client NUMERIC(25, 2),
+                     commission_provider NUMERIC(25, 2),
+                     date_input TIMESTAMP,
+                     date_post TIMESTAMP,
+                     status VARCHAR(100),
+                     payment_type VARCHAR(100),
+                     payment_number VARCHAR(100),
+                     service_id INTEGER,
+                     service VARCHAR(100),
+                     payee_id INTEGER,
+                     payee_name VARCHAR(100),
+                     payee_bank_mfo INTEGER,
+                     payee_bank_account VARCHAR(100),
+                     payment_narrative VARCHAR(100)
+);

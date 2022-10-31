@@ -1,0 +1,85 @@
+basePath: /
+definitions:
+  http.response:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API
+  title: EVO Fintech
+  version: "1.0"
+paths:
+  /api/download/{format}:
+    get:
+      description: Download in json or csv format with filters
+      parameters:
+      - description: 'download format: json or csv'
+        in: path
+        name: format
+        required: true
+        type: string
+      - description: 'transaction id: n or 1, 2, 3, ..., n'
+        in: query
+        name: transaction_id
+        type: integer
+      - description: terminal id
+        in: query
+        name: terminal_id
+        type: string
+      - description: 'status: accepted or declined'
+        in: query
+        name: status
+        type: string
+      - description: 'payment type: cash or card'
+        in: query
+        name: payment_type
+        type: string
+      - description: 'date post: from yyyy-mm-dd, to yyyy-mm-dd'
+        in: query
+        name: date_post
+        type: string
+      - description: payment narrative
+        in: query
+        name: payment_narrative
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      tags:
+      - download
+  /api/upload:
+    post:
+      description: upload csv file, parsing it and saving the parsing results to the
+        database
+      parameters:
+      - description: csv file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      tags:
+      - upload
+swagger: "2.0"
