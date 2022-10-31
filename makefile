@@ -5,4 +5,4 @@ start:
 	docker-compose up -d
 
 migration-up:
-	migrate -path ./schema -database 'postgres://user:pass@0.0.0.0:54320/postgres?sslmode=disable' up
+	migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:54320/postgres?sslmode=disable' up
