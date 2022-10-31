@@ -5,6 +5,7 @@
 ## Requirements
 * Git
 * Docker
+* golang-migrate 
 
 
 ## How to run with MakeFile
@@ -30,4 +31,5 @@ Run migrate up
 
 
 
-##
+## Swagger Documentation
+http://localhost:8080/swagger/index.html
