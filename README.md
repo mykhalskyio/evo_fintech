@@ -1,12 +1,12 @@
 # Evo Fintech
 
----
+
 
 ## Requirements
 * Git
 * Docker
 
----
+
 ## How to run with MakeFile
 
 Clone repository
@@ -21,13 +21,13 @@ Run migrate up
 
     $ make migrate-init
 
----
+
 
 ## Endpoints
 * POST   - /api/upload 
 * GET    - /api/download/json
 * GET    - /api/download/csv
 
----
+
 
 ##
