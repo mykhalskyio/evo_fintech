@@ -12,9 +12,9 @@ services:
     image: "postgres:latest"
     container_name: "postgres"
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_DB=postgres
     ports:
       - "54320:5432"
     volumes:
