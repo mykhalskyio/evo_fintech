@@ -32,13 +32,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "transaction id: n or 1, 2, 3, ..., n",
+                        "description": "transaction id",
                         "name": "transaction_id",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "terminal id",
+                        "description": "terminal id: n or 1, 2, 3, ..., n",
                         "name": "terminal_id",
                         "in": "query"
                     },

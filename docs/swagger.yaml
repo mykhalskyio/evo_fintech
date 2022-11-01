@@ -22,11 +22,11 @@ paths:
         name: format
         required: true
         type: string
-      - description: 'transaction id: n or 1, 2, 3, ..., n'
+      - description: transaction id
         in: query
         name: transaction_id
         type: integer
-      - description: terminal id
+      - description: 'terminal id: n or 1, 2, 3, ..., n'
         in: query
         name: terminal_id
         type: string
