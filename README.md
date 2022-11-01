@@ -1,7 +1,7 @@
 # Evo Fintech
 
 ## Live Demo
- https://evo.mykhalskyio.xyz/
+ https://evo.mykhalskyio.xyz/swagger/index.html
 
 
 
