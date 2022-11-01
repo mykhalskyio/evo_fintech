@@ -47,7 +47,7 @@ func (d *DataController) upload(ctx *gin.Context) {
 	}
 	buf := make([]byte, 104857600) // 104857600 = 100mb
 	scanner := bufio.NewScanner(data)
-	scanner.Buffer(buf, 104857600)
+	scanner.Buffer(buf, int(file.Size))
 	var dataString string
 	for scanner.Scan() {
 		dataString += fmt.Sprintf("%s\n", scanner.Text())
