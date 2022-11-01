@@ -28,8 +28,4 @@ Run migrate up
 * POST   - /api/upload 
 * GET    - /api/download/json
 * GET    - /api/download/csv
-
-
-
-## Swagger Documentation
-http://localhost:8080/swagger/index.html
+* GET    - /swagger/index.html
