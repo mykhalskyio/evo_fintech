@@ -1,19 +1,21 @@
 package http
 
 import (
+	"bufio"
 	"encoding/json"
 	"evo_fintech/internal/entity"
-	"github.com/gin-gonic/gin"
-	"github.com/gocarina/gocsv"
-	"mime/multipart"
+	"fmt"
 	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gocarina/gocsv"
 )
 
 type DataService interface {
-	Upload(data *multipart.File) error
+	Upload(data *string) error
 	Download(filter *entity.Filter) ([]*entity.Data, error)
 }
 
@@ -33,13 +35,24 @@ func newDataController(service DataService) *DataController {
 // @Failure     500 {object} response
 // @Router      /api/upload [post]
 func (d *DataController) upload(ctx *gin.Context) {
-	file, _ := ctx.FormFile("file")
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		errorResponse(ctx, http.StatusBadRequest, "can't get file")
+		return
+	}
 	data, err := file.Open()
 	if err != nil {
 		errorResponse(ctx, http.StatusBadRequest, "can't open the file")
 		return
 	}
-	err = d.service.Upload(&data)
+	buf := make([]byte, 104857600) // 104857600 = 100mb
+	scanner := bufio.NewScanner(data)
+	scanner.Buffer(buf, 104857600)
+	var dataString string
+	for scanner.Scan() {
+		dataString += fmt.Sprintf("%s\n", scanner.Text())
+	}
+	err = d.service.Upload(&dataString)
 	if err != nil {
 		if strings.Contains(err.Error(), "parse error") {
 			errorResponse(ctx, http.StatusBadRequest, "invalid file")
@@ -47,6 +60,10 @@ func (d *DataController) upload(ctx *gin.Context) {
 		}
 		if strings.Contains(err.Error(), "duplicate") {
 			errorResponse(ctx, http.StatusBadRequest, "duplicate primary key")
+			return
+		}
+		if strings.Contains(err.Error(), `relation "data" does not exist`) {
+			errorResponse(ctx, http.StatusBadGateway, "table doesn't exist")
 			return
 		}
 		if strings.Contains(err.Error(), "No connection") {
@@ -62,8 +79,8 @@ func (d *DataController) upload(ctx *gin.Context) {
 // @Tags        download
 // @Description Download in json or csv format with filters
 // @Param       format path string true "download format: json or csv"
-// @Param       transaction_id query int false "transaction id: n or 1, 2, 3, ..., n"
-// @Param       terminal_id query string false "terminal id"
+// @Param       transaction_id query int false "transaction id"
+// @Param       terminal_id query string false "terminal id: n or 1, 2, 3, ..., n"
 // @Param       status query string false "status: accepted or declined"
 // @Param       payment_type query string false "payment type: cash or card"
 // @Param       date_post query string false "date post: from yyyy-mm-dd, to yyyy-mm-dd"

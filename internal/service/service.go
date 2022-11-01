@@ -1,12 +1,11 @@
 package service
 
 import (
-	"encoding/csv"
 	"evo_fintech/internal/entity"
 	"fmt"
-	"github.com/gocarina/gocsv"
-	"mime/multipart"
 	"strings"
+
+	"github.com/gocarina/gocsv"
 )
 
 type DataStorage interface {
@@ -22,10 +21,9 @@ func NewDataService(storage DataStorage) *DataService {
 	return &DataService{storage: storage}
 }
 
-func (d DataService) Upload(file *multipart.File) error {
+func (d DataService) Upload(file *string) error {
 	var dataSlice []*entity.Data
-	csvReader := csv.NewReader(*file)
-	if err := gocsv.UnmarshalCSV(csvReader, &dataSlice); err != nil {
+	if err := gocsv.UnmarshalString(*file, &dataSlice); err != nil {
 		return err
 	}
 	for _, data := range dataSlice {
