@@ -23,7 +23,7 @@ Build and Run
 
 Run migrate up
 
-    $ make migrate-init
+    $ make migration-up
 
 
 
